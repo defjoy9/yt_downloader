@@ -1,22 +1,13 @@
 from yt_dlp import YoutubeDL
 
 def main():
-    is_running = True
     yt_url = input("Enter youtube URL here: ")
-    while is_running:
-        if "https://www.youtube.com" not in yt_url:
-            print("Invalid URL, try again")
-            yt_url = input("Enter youtube URL here: ")
-        else:
-            is_running = False
+    while "https://www.youtube.com/" not in yt_url:
+        yt_url = input("Invalid URL, try again: ")
 
     quality = input("Which mp3 quality do you want to download (128kbps,192kbps,320kbps): ")
-    while is_running:
-        if quality == "128" or quality =="192" or quality =="320":
-            is_running = False
-        else:
-            print("Invalid quality, try again")
-            quality = input("Which mp3 quality do you want to download (128kbps,192kbps,320kbps): ")
+    while quality not in ("128", "192", "320"):
+        quality = input("Invalid quality, try again (128/192/320): ")
 
 
     ydl_opts = {
