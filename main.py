@@ -12,7 +12,7 @@ def main():
         codec = input("Invalid codec, try again (mp3,opus,m4a): ")
     
     # user selects desired audio quality
-    quality = input("Which {codec} quality do you want to download (128kbps,192kbps,320kbps): ")
+    quality = input(f"Which {codec} quality do you want to download (128kbps,192kbps,320kbps): ")
     while quality not in ("128", "192", "320"):
         quality = input("Invalid quality, try again (128/192/320): ")
 
