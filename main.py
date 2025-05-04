@@ -11,21 +11,21 @@ def main():
     while codec not in ("mp3","opus","m4a"):
         codec = input("Invalid codec, try again (mp3,opus,m4a): ")
     
-    # user selects desired quality
-    quality = input("Which mp3 quality do you want to download (128kbps,192kbps,320kbps): ")
+    # user selects desired audio quality
+    quality = input("Which {codec} quality do you want to download (128kbps,192kbps,320kbps): ")
     while quality not in ("128", "192", "320"):
         quality = input("Invalid quality, try again (128/192/320): ")
 
-    # setting up all the required options to download URL
+    # yt-dlp configuration options for audio extraction
     ydl_opts = {
         'format': 'bestaudio/best',
         'outtmpl': '%(title)s.%(ext)s',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
+            'preferredcodec': codec,
             'preferredquality': quality
 }]}
-    # converting audio to mp3 and saves the {codec} file.
+    # download and convert audio using yt-dlp
     try:
         with YoutubeDL(ydl_opts) as ydl:
             ydl.download([yt_url])
