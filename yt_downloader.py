@@ -1,22 +1,25 @@
 from yt_dlp import YoutubeDL
+from simple_term_menu import TerminalMenu
 
 def main():
-    # user enters youtube URL
     yt_url = input("Enter youtube URL here: ")
     while "https://www.youtube.com/" not in yt_url:
         yt_url = input("Invalid URL, try again: ")
     
-    #user chooses desired codec
-    codec = input("Which codec to use (mp3,opus,m4a): ")
-    while codec not in ("mp3","opus","m4a"):
-        codec = input("Invalid codec, try again (mp3,opus,m4a): ")
-    
-    # user selects desired audio quality
-    quality = input(f"Which {codec} quality do you want to download (128kbps,192kbps,320kbps): ")
-    while quality not in ("128", "192", "320"):
-        quality = input("Invalid quality, try again (128/192/320): ")
+    codec_optkns = ["mp3","opus","m4a"]
+    print("Select desired audio codec:")
+    terminal_menu = TerminalMenu(codec_optkns)
+    menu_entry_index = terminal_menu.show()
+    codec = codec_optkns[menu_entry_index]
+    print(f"You have selected {codec}!")
 
-    # yt-dlp configuration options for audio extraction
+    quality_options = ["128kbps", "192kbps", "320kbps"]
+    print("Select desired audio quality:")
+    terminal_menu = TerminalMenu(quality_options)
+    menu_entry_index = terminal_menu.show()
+    quality = quality_options[menu_entry_index].replace("kbps","")
+    print(f"You have selected {quality_options[menu_entry_index]}!")
+    
     ydl_opts = {
         'format': 'bestaudio/best',
         'outtmpl': '%(title)s.%(ext)s',
@@ -25,7 +28,6 @@ def main():
             'preferredcodec': codec,
             'preferredquality': quality
 }]}
-    # download and convert audio using yt-dlp
     try:
         with YoutubeDL(ydl_opts) as ydl:
             ydl.download([yt_url])
